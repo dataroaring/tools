@@ -1,0 +1,34 @@
+1. Install package `libstdc++6` (Ubuntu 16.04)
+1. Add following to `~/.gdbinit`
+```
+python
+import sys 
+sys.path.insert(0, '/usr/share/gcc-9/python')
+from libstdcxx.v6.printers import register_libstdcxx_printers
+register_libstdcxx_printers (None)
+end
+```
+
+Note: check /usr/share path for version of libstdstdc++ - `dpkg -L libstdc++6 | grep python`
+
+### CentOS 7
+
+Default install comes with GCC-4.8.5 printers, which are not compatible with STL structures from GCC7.3.
+
+Solution: install newer GDB (e.g. from devtoolset-9):
+
+```
+yum install centos-release-scl
+yum install devtoolset-9-gdb
+```
+
+Newer gdb is available at: `/opt/rh/devtoolset-9/root/usr/bin/gdb`
+
+```
+python
+import sys 
+sys.path.insert(0, '/usr/share/gcc-4.8.5/python')
+from libstdcxx.v6.printers import register_libstdcxx_printers
+register_libstdcxx_printers (None)
+end
+```
